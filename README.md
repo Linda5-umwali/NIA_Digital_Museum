@@ -17,10 +17,10 @@ The system structure and interactions are modeled using UML diagrams to ensure c
 - System flow
 - Component relationships
 
-## 🧱 System Architecture
+## System Architecture
 
-### 📁 Project Structure
-
+### Project Structure
+```
 nia-digital-museum/
 │
 ├── frontend/
@@ -50,7 +50,7 @@ nia-digital-museum/
 │
 ├── README.md
 └── package.json
-
+```
   ## Tech Stack
 **Frontend:**
 - HTML
@@ -58,13 +58,13 @@ nia-digital-museum/
 - JavaScript
 
 **Backend (Planned):**
-- Node.js / Express *(or you can change later)*
+- Node.js / Express
 
 **Database (Planned):**
-- MongoDB *(or MySQL if you prefer)*
+- MySQL
 
 ## Inspiration
 The project is inspired by the need to create more opportunities for artists in Africa and provide them with platforms to monetize their passion. That's why the platform is named NIA meaning Purpose.
 
-## 👩🏽‍💻 Author
+## Author
 **Linda Umwali**

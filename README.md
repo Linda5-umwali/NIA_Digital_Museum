@@ -63,6 +63,29 @@ nia-digital-museum/
 **Database (Planned):**
 - MySQL
 
+## Setup Instructions
+```
+### 1. Clone the repository
+git clone https://github.com/your-username/nia-digital-museum.git
+
+### 2. Navigate to backend
+cd Backend
+
+### 3. Install dependencies
+npm install
+
+### 4. Create .env file
+Add:
+MONGO_URI=your_mongodb_connection
+PORT=5000
+
+### 5. Run backend
+node server.js
+
+### 6. Open frontend
+Open index.html in browser
+```
+
 ## Inspiration
 The project is inspired by the need to create more opportunities for artists in Africa and provide them with platforms to monetize their passion. That's why the platform is named NIA meaning Purpose.
 

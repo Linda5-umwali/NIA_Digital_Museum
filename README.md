@@ -65,24 +65,24 @@ nia-digital-museum/
 
 ## Setup Instructions
 ```
-### 1. Clone the repository
+1. Clone the repository
 git clone https://github.com/your-username/nia-digital-museum.git
 
-### 2. Navigate to backend
+2. Navigate to backend
 cd Backend
 
-### 3. Install dependencies
+3. Install dependencies
 npm install
 
-### 4. Create .env file
+4. Create .env file
 Add:
 MONGO_URI=your_mongodb_connection
 PORT=5000
 
-### 5. Run backend
+5. Run backend
 node server.js
 
-### 6. Open frontend
+6. Open frontend
 Open index.html in browser
 ```
 

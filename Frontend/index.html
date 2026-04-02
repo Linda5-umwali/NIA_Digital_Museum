@@ -276,7 +276,9 @@ input[type="radio"]:checked + div { color: var(--accent); }
 .momo-display.show { display: block; }
 .momo-number { font-weight: 700; color: var(--accent-2); font-size: 16px; margin-top: 6px; font-family: 'DM Mono', monospace; }
 
-/* MARQUEE BAND */
+/* ============================================================
+   MARQUEE BAND
+   ============================================================ */
 .marquee-band {
   overflow: hidden; white-space: nowrap;
   background: var(--accent); padding: 14px 0;
@@ -297,7 +299,9 @@ input[type="radio"]:checked + div { color: var(--accent); }
   100% { transform: translateX(-50%); }
 }
 
-/* EXHIBITIONS */
+/* ============================================================
+   EXHIBITIONS
+   ============================================================ */
 #exhibitions { background: var(--bg); }
 .ex-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 3px; }
 .ex-card {
@@ -376,7 +380,7 @@ input[type="radio"]:checked + div { color: var(--accent); }
 
 <section id="marketplace"><div class="reveal"><div class="s-num">02 — Marketplace</div><h2 class="s-title">Collect <em>Art</em></h2><div class="market-wrap"><aside class="m-sidebar"><div class="m-side-title">Filter Works</div><div class="m-group"><div class="m-group-label">Price Range</div><input type="range" id="priceRange" min="0" max="10000" value="10000" step="100"><div class="range-row"><span>$0</span><span id="priceValue">$10,000</span></div></div><div class="m-group"><div class="m-group-label">Medium</div><div id="mediumFilters" class="chk-list"></div></div></aside><div id="marketplaceContainer" class="m-grid"></div></div></div></section>
 
-<!-- EXHIBITIONS -->
+<!-- ============================================================ EXHIBITIONS -->
 <section id="exhibitions">
   <div class="reveal">
     <div class="s-num">03 — Exhibitions</div>
@@ -460,25 +464,124 @@ let currentPriceFilter = 10000;
 let currentMediumFilters = new Set();
 let selectedArtForPayment = null;
 
+const API_BASE_URL = 'https://nia-digital-museum-b9z0.onrender.com';
+
 const defaultArtworks = [
   { id: 'a1', title: 'Depths Uncharted', artist: 'Linda Umwali', artistId: 'marina', price: 2400, medium: 'Digital Painting', imageUrl: 'https://plus.unsplash.com/premium_photo-1752521132454-b430d2416f36?w=400&auto=format', dateAdded: Date.now() },
   { id: 'a2', title: 'Void Frequency', artist: 'Chris Uwonkunda', artistId: 'cosmos', price: 1800, medium: 'Generative', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAVi5X05DC0PGxEYKzvTVCQPx2iiHXgvdELQ&s', dateAdded: Date.now() },
   { id: 'a3', title: 'Verdant Signal', artist: 'Terra Vision', artistId: 'terra', price: 980, medium: 'Photography', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp8KbgA6_eQD-A3lDJ-Jk4B-PtYXWJivEjkw&s', dateAdded: Date.now() }
 ];
 
-function loadData() {
-  const stored = localStorage.getItem('nia_artworks');
-  if(stored) artworks = JSON.parse(stored);
-  else artworks = [...defaultArtworks];
-  const usersStored = localStorage.getItem('nia_users');
-  if(usersStored) window.users = JSON.parse(usersStored);
-  else window.users = [];
+// API Functions
+async function apiRequest(endpoint, options = {}) {
+  try {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+      },
+      ...options
+    });
+    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('API request failed:', error);
+    // Fallback to localStorage if API fails
+    return null;
+  }
+}
+
+async function loadArtworksFromAPI() {
+  const data = await apiRequest('/artworks');
+  return data || defaultArtworks;
+}
+
+async function loadUsersFromAPI() {
+  return await apiRequest('/users') || [];
+}
+
+async function loadExhibitionsFromAPI() {
+  return await apiRequest('/exhibitions') || [];
+}
+
+async function saveArtworkToAPI(artwork) {
+  return await apiRequest('/artworks', {
+    method: 'POST',
+    body: JSON.stringify(artwork)
+  });
+}
+
+async function updateArtworkInAPI(id, artwork) {
+  return await apiRequest(`/artworks/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(artwork)
+  });
+}
+
+async function deleteArtworkFromAPI(id) {
+  return await apiRequest(`/artworks/${id}`, {
+    method: 'DELETE'
+  });
+}
+
+async function registerUserAPI(user) {
+  return await apiRequest('/auth/register', {
+    method: 'POST',
+    body: JSON.stringify(user)
+  });
+}
+
+async function loginUserAPI(credentials) {
+  return await apiRequest('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify(credentials)
+  });
+}
+
+async function loadData() {
+  // Try to load from API first, fallback to localStorage
+  try {
+    const [apiArtworks, apiUsers, apiExhibitions] = await Promise.all([
+      loadArtworksFromAPI(),
+      loadUsersFromAPI(),
+      loadExhibitionsFromAPI()
+    ]);
+    
+    artworks = apiArtworks;
+    window.users = apiUsers;
+    window.exhibitions = apiExhibitions;
+  } catch (error) {
+    console.error('API load failed, using localStorage:', error);
+    // Fallback to localStorage if API fails
+    const stored = localStorage.getItem('nia_artworks');
+    artworks = stored ? JSON.parse(stored) : [...defaultArtworks];
+    const usersStored = localStorage.getItem('nia_users');
+    window.users = usersStored ? JSON.parse(usersStored) : [];
+    window.exhibitions = [];
+  }
+  
   const session = localStorage.getItem('nia_session');
   if(session) { currentUser = JSON.parse(session); updateUIForUser(); }
   renderGalleryAndMarket();
 }
-function saveArtworks() { localStorage.setItem('nia_artworks', JSON.stringify(artworks)); renderGalleryAndMarket(); }
-function saveUsers() { localStorage.setItem('nia_users', JSON.stringify(window.users)); }
+async function saveArtworks() {
+  localStorage.setItem('nia_artworks', JSON.stringify(artworks));
+  // Sync with API if available
+  for (const artwork of artworks) {
+    if (artwork.id.startsWith('a') && artwork.id.length > 1) {
+      // New artwork, save to API
+      await saveArtworkToAPI(artwork);
+    }
+  }
+  renderGalleryAndMarket();
+}
+async function saveUsers() {
+  localStorage.setItem('nia_users', JSON.stringify(window.users));
+  // Sync with API if available
+  for (const user of window.users) {
+    await saveUserToAPI(user);
+  }
+}
 function updateUIForUser() {
   if(currentUser) {
     document.getElementById('auth-buttons').style.display = 'none';
@@ -532,7 +635,7 @@ function initiatePayment(artId) {
   detailsDiv.innerHTML = `<strong>${art.title}</strong> by ${art.artist}<br>Price: $${art.price.toLocaleString()}`;
   document.getElementById('paymentModal').classList.add('open');
 }
-function deleteArtwork(artId) {
+async function deleteArtwork(artId) {
   if(!currentUser) { showToast('Please sign in'); return; }
   const artIndex = artworks.findIndex(a => a.id === artId);
   if(artIndex === -1) return;
@@ -541,6 +644,8 @@ function deleteArtwork(artId) {
   if(confirm(`Delete "${art.title}"? This cannot be undone.`)) {
     artworks.splice(artIndex, 1);
     saveArtworks();
+    // Also delete from API
+    await deleteArtworkFromAPI(artId);
     showToast(`✓ "${art.title}" deleted`);
   }
 }
@@ -589,7 +694,7 @@ function openAuthModal(mode) {
 }
 function closeAuthModal() { document.getElementById('authModal').classList.remove('open'); }
 function switchAuthMode() { authMode = authMode === 'signup' ? 'login' : 'signup'; openAuthModal(authMode); }
-function handleAuth() {
+async function handleAuth() {
   const name = document.getElementById('authName').value.trim();
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value;
@@ -599,26 +704,64 @@ function handleAuth() {
     let role = 'visitor';
     const selected = document.querySelector('#roleSelect .rp-opt.sel');
     if(selected) role = selected.dataset.role;
-    if(window.users.find(u => u.email === email)) { showToast('Email already registered'); return; }
     const momoNumber = role === 'artist' ? document.getElementById('authMomoNumber').value.trim() : '';
     if(role === 'artist' && !momoNumber) { showToast('MOMO number required for artists'); return; }
-    const newUser = { id: Date.now().toString(), name, email, password, role, momoNumber };
-    window.users.push(newUser);
-    saveUsers();
-    currentUser = newUser;
-    localStorage.setItem('nia_session', JSON.stringify(currentUser));
-    showToast(`Welcome ${name}! You joined as ${role}`);
-    closeAuthModal();
-    updateUIForUser();
-    renderGalleryAndMarket();
+    
+    try {
+      const newUser = { name, email, password, role, momoNumber };
+      const apiUser = await registerUserAPI(newUser);
+      
+      if(apiUser) {
+        currentUser = apiUser;
+        localStorage.setItem('nia_session', JSON.stringify(currentUser));
+        showToast(`Welcome ${name}! You joined as ${role}`);
+        closeAuthModal();
+        updateUIForUser();
+        renderGalleryAndMarket();
+      } else {
+        // Fallback to localStorage
+        if(window.users.find(u => u.email === email)) { showToast('Email already registered'); return; }
+        const localUser = { id: Date.now().toString(), ...newUser };
+        window.users.push(localUser);
+        saveUsers();
+        currentUser = localUser;
+        localStorage.setItem('nia_session', JSON.stringify(currentUser));
+        showToast(`Welcome ${name}! You joined as ${role}`);
+        closeAuthModal();
+        updateUIForUser();
+        renderGalleryAndMarket();
+      }
+    } catch (error) {
+      showToast('Registration failed. Please try again.');
+      console.error('Registration error:', error);
+    }
   } else {
-    const user = window.users.find(u => u.email === email && u.password === password);
-    if(!user) { showToast('Invalid email/password'); return; }
-    currentUser = user;
-    localStorage.setItem('nia_session', JSON.stringify(currentUser));
-    showToast(`Welcome back ${user.name}`);
-    closeAuthModal();
-    updateUIForUser();
+    try {
+      const credentials = { email, password };
+      const apiUser = await loginUserAPI(credentials);
+      
+      if(apiUser) {
+        currentUser = apiUser;
+        localStorage.setItem('nia_session', JSON.stringify(currentUser));
+        showToast(`Welcome back ${apiUser.name}`);
+        closeAuthModal();
+        updateUIForUser();
+        renderGalleryAndMarket();
+      } else {
+        // Fallback to localStorage
+        const user = window.users.find(u => u.email === email && u.password === password);
+        if(!user) { showToast('Invalid email/password'); return; }
+        currentUser = user;
+        localStorage.setItem('nia_session', JSON.stringify(currentUser));
+        showToast(`Welcome back ${user.name}`);
+        closeAuthModal();
+        updateUIForUser();
+        renderGalleryAndMarket();
+      }
+    } catch (error) {
+      showToast('Login failed. Please try again.');
+      console.error('Login error:', error);
+    }
   }
 }
 function logout() {
@@ -630,7 +773,7 @@ function logout() {
 }
 function openUploadModal() { if(!currentUser || currentUser.role !== 'artist') { showToast('Only artists can upload'); return; } document.getElementById('uploadModal').classList.add('open'); }
 function closeUploadModal() { document.getElementById('uploadModal').classList.remove('open'); }
-function uploadArtwork() {
+async function uploadArtwork() {
   if(!currentUser || currentUser.role !== 'artist') { showToast('Unauthorized'); return; }
   const title = document.getElementById('artTitle').value.trim();
   const medium = document.getElementById('artMedium').value.trim();
@@ -638,10 +781,12 @@ function uploadArtwork() {
   const fileInput = document.getElementById('artImageFile');
   if(!title || !medium || isNaN(price) || price <=0 || !fileInput.files.length) { showToast('Please fill all fields and select image'); return; }
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = async function(e) {
     const newArt = { id: Date.now().toString(), title, artist: currentUser.name, artistId: currentUser.id, price, medium, imageUrl: e.target.result, dateAdded: Date.now() };
     artworks.unshift(newArt);
     saveArtworks();
+    // Also save to API
+    await saveArtworkToAPI(newArt);
     closeUploadModal();
     document.getElementById('artTitle').value = '';
     document.getElementById('artMedium').value = '';
@@ -716,7 +861,9 @@ function togglePaymentMethod(method) {
 }
 const io = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')), { threshold: 0.07 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-loadData();
+(async () => {
+  await loadData();
+})();
 </script>
 </body>
 </html>

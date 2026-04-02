@@ -25,12 +25,6 @@ nia-digital-museum/
 │
 ├── frontend/
 │   ├── index.html
-│   ├── gallery.html
-│   ├── artwork.html
-│   ├── css/
-│   │   └── styles.css
-│   ├── js/
-│   │   └── app.js
 │   └── assets/
 │       └── images/
 │
@@ -42,14 +36,12 @@ nia-digital-museum/
 │   │   └── artworksController.js
 │   ├── models/
 │   │   └── artworkModel.js
-│   └── config/
-│       └── db.js
-│
+│   ├── config/
+│   │   └── db.js
+│   └── package.json
 ├── docs/
-│   └── uml-diagrams/
-│
-├── README.md
-└── package.json
+│   └── SRS 
+└── README.md
 ```
   ## Tech Stack
 **Frontend:**

@@ -58,7 +58,7 @@ nia-digital-museum/
 - JavaScript
 
 **Backend:**
-- Node.js / Express
+- Node.js
 
 **Database:**
 - MangoDB

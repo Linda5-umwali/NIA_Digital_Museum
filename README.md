@@ -57,11 +57,11 @@ nia-digital-museum/
 - CSS
 - JavaScript
 
-**Backend (Planned):**
+**Backend:**
 - Node.js / Express
 
-**Database (Planned):**
-- MySQL
+**Database:**
+- MangoDB
 
 ## Setup Instructions
 ```
@@ -76,7 +76,7 @@ npm install
 
 4. Create .env file
 Add:
-MONGO_URI=your_mongodb_connection
+MONGO_URI=mongodb://Nia_db:6LEDLBgzOGzJbhL3@ac-eqkof4w-shard-00-00.gpgfftc.mongodb.net:27017,ac-eqkof4w-shard-00-01.gpgfftc.mongodb.net:27017,ac-eqkof4w-shard-00-02.gpgfftc.mongodb.net:27017/?ssl=true&replicaSet=atlas-6insen-shard-0&authSource=admin&appName=Cluster0
 PORT=5000
 
 5. Run backend

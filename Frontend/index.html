@@ -276,9 +276,7 @@ input[type="radio"]:checked + div { color: var(--accent); }
 .momo-display.show { display: block; }
 .momo-number { font-weight: 700; color: var(--accent-2); font-size: 16px; margin-top: 6px; font-family: 'DM Mono', monospace; }
 
-/* ============================================================
-   MARQUEE BAND
-   ============================================================ */
+/* MARQUEE BAND */
 .marquee-band {
   overflow: hidden; white-space: nowrap;
   background: var(--accent); padding: 14px 0;
@@ -299,9 +297,7 @@ input[type="radio"]:checked + div { color: var(--accent); }
   100% { transform: translateX(-50%); }
 }
 
-/* ============================================================
-   EXHIBITIONS
-   ============================================================ */
+/* EXHIBITIONS */
 #exhibitions { background: var(--bg); }
 .ex-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 3px; }
 .ex-card {
@@ -380,7 +376,7 @@ input[type="radio"]:checked + div { color: var(--accent); }
 
 <section id="marketplace"><div class="reveal"><div class="s-num">02 — Marketplace</div><h2 class="s-title">Collect <em>Art</em></h2><div class="market-wrap"><aside class="m-sidebar"><div class="m-side-title">Filter Works</div><div class="m-group"><div class="m-group-label">Price Range</div><input type="range" id="priceRange" min="0" max="10000" value="10000" step="100"><div class="range-row"><span>$0</span><span id="priceValue">$10,000</span></div></div><div class="m-group"><div class="m-group-label">Medium</div><div id="mediumFilters" class="chk-list"></div></div></aside><div id="marketplaceContainer" class="m-grid"></div></div></div></section>
 
-<!-- ============================================================ EXHIBITIONS -->
+<!-- EXHIBITIONS -->
 <section id="exhibitions">
   <div class="reveal">
     <div class="s-num">03 — Exhibitions</div>
@@ -539,7 +535,7 @@ async function loginUserAPI(credentials) {
 }
 
 async function loadData() {
-  // Try to load from API first, fallback to localStorage
+  // Try to load from API first, fallback to localStorage 
   try {
     const [apiArtworks, apiUsers, apiExhibitions] = await Promise.all([
       loadArtworksFromAPI(),

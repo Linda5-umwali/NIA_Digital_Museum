@@ -77,8 +77,10 @@ nav {
 .hero, section { padding: 96px 48px; position: relative; }
 #hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 80px 48px 60px; gap: 0; }
 .hero-left { padding-right: 60px; }
-.hero-title { font-weight: 800; font-size: clamp(52px, 7vw, 96px); line-height: 0.92; text-transform: uppercase; margin-bottom: 28px; }
-.hero-title .line-2 { display: block; color: var(--accent-2); font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5.5vw, 76px); }
+.hero-title { font-weight: 800; font-size: clamp(52px, 7vw, 96px); line-height: 1.02; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 36px; color: var(--text); }
+.hero-title .line-2 { display: block; color: var(--accent-2); font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5.5vw, 76px); line-height: 1.05; margin-top: 12px; }
+.hero-title .outline { -webkit-text-stroke: 2px var(--text); color: transparent; opacity: 0.95; }
+[data-theme="dark"] .hero-title .outline { -webkit-text-stroke-color: var(--text-2); }
 .hero-desc { font-size: 18px; font-weight: 300; color: var(--text-2); max-width: 400px; margin-bottom: 40px; }
 .btn-primary { padding: 14px 36px; background: var(--accent); color: var(--text-inv); border: none; font-weight: 700; letter-spacing: 0.15em; cursor: pointer; transition: transform 0.2s; }
 [data-theme="dark"] .btn-primary { background: var(--accent-hi); color: #050c14; }
@@ -91,20 +93,27 @@ nav {
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 .gallery-masonry, .m-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2px; margin-top: 24px; }
-.g-item, .m-item { background: var(--surface); border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: transform 0.2s, border-color 0.2s; border-radius: 8px; }
+.g-item, .m-item { background: var(--surface); border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: transform 0.2s, border-color 0.2s; border-radius: 0; }
 .g-item:hover, .m-item:hover { transform: translateY(-4px); border-color: var(--accent-2); }
 .g-art { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: var(--bg-3); position: relative; }
 .g-art img, .m-art img { width: 100%; height: 100%; object-fit: cover; }
 .m-art { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: var(--bg-3); position: relative; }
-.g-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--overlay), transparent 60%); opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; border-radius: 8px; }
+.m-info { padding: 16px; display: flex; flex-direction: column; }
+.m-by { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-3); margin-bottom: 12px; }
+.g-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--overlay), transparent 60%); opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; border-radius: 0; }
 .g-item:hover .g-overlay { opacity: 1; }
 .g-art-name, .m-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; }
+.g-art-name, .g-art-by, .g-price { color: #e8f0f8; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+.g-art-by { font-family: 'DM Mono', monospace; font-size: 12px; margin-top: 4px; }
 .g-price, .m-price { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; margin-top: 6px; }
 .filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
 .flt { padding: 7px 18px; background: transparent; border: 1px solid var(--border); color: var(--text-3); font-weight: 600; cursor: pointer; transition: 0.2s; border-radius: 40px; }
 .flt.active, .flt:hover { background: var(--accent); color: var(--text-inv); border-color: var(--accent); }
-.market-wrap { display: grid; grid-template-columns: 260px 1fr; gap: 32px; margin-top: 24px; }
-.m-sidebar { background: var(--surface); border: 1px solid var(--border); padding: 28px; position: sticky; top: 76px; border-radius: 16px; backdrop-filter: blur(4px); }
+.market-wrap { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 24px; }
+.m-sidebar { background: var(--surface); border: 1px solid var(--border); padding: 24px; border-radius: 16px; backdrop-filter: blur(4px); }
+.m-sidebar .m-side-title { margin-bottom: 16px; }
+.m-group { margin-bottom: 16px; }
+.m-grid { margin-top: 0; }
 input[type=range] { width: 100%; accent-color: var(--accent-2); }
 /* Card-style inputs for modals */
 .card-input-group {
@@ -160,38 +169,82 @@ input[type=range] { width: 100%; accent-color: var(--accent-2); }
 .a-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 0;
   padding: 24px;
   transition: transform 0.2s, border-color 0.2s;
   cursor: pointer;
 }
 .a-card:hover { transform: translateY(-4px); border-color: var(--accent-2); }
 .a-avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--bg-3); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 16px; }
+
+.roles-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; }
+.role-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 36px 28px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s, transform 0.3s;
+  border-radius: 0;
+}
+.role-box:hover { border-color: var(--border-s); transform: translateY(-4px); }
+.role-ico { font-size: 32px; margin-bottom: 20px; }
+.role-nm { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; margin-bottom: 10px; }
+.role-perks { font-size: 13px; color: var(--text-2); line-height: 2; font-weight: 400; }
+.btn-role {
+  margin-top: 24px; width: 100%; padding: 11px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  background: transparent; border: 1px solid var(--border-s);
+  color: var(--text-2); cursor: pointer; transition: all 0.2s;
+}
+.btn-role:hover { background: var(--accent); border-color: var(--accent); color: var(--text-inv); }
+[data-theme="dark"] .btn-role:hover { background: var(--accent-hi); border-color: var(--accent-hi); color: #050c14; }
 .a-name { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
 .a-medium { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-3); margin-bottom: 12px; }
 .a-bio { font-size: 13px; color: var(--text-2); margin-bottom: 20px; line-height: 1.5; }
 .btn-follow { width: 100%; padding: 10px; border-radius: 40px; background: transparent; border: 1px solid var(--border-s); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; }
 .btn-follow:hover, .btn-follow.on { background: var(--accent); color: var(--text-inv); border-color: var(--accent); }
+.btn-follow.on:hover { background: var(--text); color: var(--text-inv); border-color: var(--text); }
+[data-theme="dark"] .btn-follow:hover, [data-theme="dark"] .btn-follow.on { background: var(--accent-hi); color: #050c14; border-color: var(--accent-hi); }
+[data-theme="dark"] .btn-follow.on:hover { background: var(--bg); color: var(--text-inv); border-color: var(--bg); }
 .btn-delete { padding: 6px 12px; background: rgba(220, 50, 50, 0.1); border: 1px solid rgba(220, 50, 50, 0.3); color: #d83232; font-size: 11px; border-radius: 4px; cursor: pointer; transition: all 0.2s; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; }
 .btn-delete:hover { background: rgba(220, 50, 50, 0.2); border-color: rgba(220, 50, 50, 0.5); }
-.m-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; }
+.btn-add-message {
+  margin-top: 16px; padding: 10px 14px;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  background: transparent; border: 1px solid var(--border-s); color: var(--text-2); cursor: pointer; transition: all 0.2s;
+}
+.btn-add-message:hover { background: var(--accent); border-color: var(--accent); color: var(--text-inv); }
+.comm-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.forum-message-panel { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+.forum-message-panel textarea { width: 100%; min-height: 100px; padding: 12px; border: 1px solid var(--border-s); border-radius: 4px; background: var(--surface); color: var(--text); resize: vertical; font-family: 'Barlow Condensed', sans-serif; }
+.forum-messages { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+.forum-message { border: 1px solid var(--border-s); background: var(--surface); padding: 12px; border-radius: 4px; }
+.forum-message .msg-author { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-3); margin-bottom: 2px; }
+.forum-message .msg-body { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--text); margin-bottom: 8px; }
+.forum-message .msg-ts { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-3); }
+.m-foot { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; align-items: flex-start; }
+.m-price { font-size: 16px; font-weight: 700; color: var(--text); }
+.comm-card, .ev-card, .ex-card, .a-card, .g-item, .m-item { border-radius: 0 !important; }
+
 .btn-buy {
-  padding: 8px 16px;
+  width: 100%;
+  padding: 10px;
   background: var(--accent);
   color: var(--text-inv);
   border: none;
-  border-radius: 6px;
+  border-radius: 0;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.05em;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s;
-  flex: 1;
-  text-align: center;
 }
 [data-theme="dark"] .btn-buy { background: var(--accent-hi); color: #050c14; }
-.btn-buy:hover { opacity: 0.8; transform: translateY(-1px); }
+.btn-buy:hover { opacity: 0.9; }
 /* Footer (restored original style) */
 footer {
   background: var(--bg-2); padding: 64px 48px 40px;
@@ -223,9 +276,7 @@ input[type="radio"]:checked + div { color: var(--accent); }
 .momo-display.show { display: block; }
 .momo-number { font-weight: 700; color: var(--accent-2); font-size: 16px; margin-top: 6px; font-family: 'DM Mono', monospace; }
 
-/* ============================================================
-   MARQUEE BAND
-   ============================================================ */
+/* MARQUEE BAND */
 .marquee-band {
   overflow: hidden; white-space: nowrap;
   background: var(--accent); padding: 14px 0;
@@ -246,9 +297,7 @@ input[type="radio"]:checked + div { color: var(--accent); }
   100% { transform: translateX(-50%); }
 }
 
-/* ============================================================
-   EXHIBITIONS
-   ============================================================ */
+/* EXHIBITIONS */
 #exhibitions { background: var(--bg); }
 .ex-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 3px; }
 .ex-card {
@@ -257,6 +306,7 @@ input[type="radio"]:checked + div { color: var(--accent); }
   overflow: hidden; cursor: pointer;
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 36px; transition: border-color 0.3s;
+  border-radius: 0;
 }
 .ex-card:hover { border-color: var(--border-s); }
 .ex-card:first-child { min-height: 420px; grid-row: 1 / 3; }
@@ -313,12 +363,12 @@ input[type="radio"]:checked + div { color: var(--accent); }
   <ul class="nav-links"><li><a href="#gallery">Gallery</a></li><li><a href="#marketplace">Market</a></li><li><a href="#exhibitions">Exhibitions</a></li><li><a href="#artists">Artists</a></li><li><a href="#community">Community</a></li><li><a href="#about">About</a></li></ul>
   <div class="nav-right">
     <div class="toggle-wrap"><span class="toggle-label" id="themeLabel">Light</span><div class="theme-toggle" onclick="toggleTheme()"><div class="toggle-knob"></div></div></div>
-    <div id="auth-buttons"><button class="btn-join" onclick="openAuthModal('signup')">Join Free</button><button class="btn-signin" onclick="openAuthModal('login')">Sign In</button></div>
+    <div id="auth-buttons"><button class="btn-join" onclick="openAuthModal('login')">Join Free</button><button class="btn-signin" onclick="openAuthModal('login')">Sign In</button></div>
     <div id="user-area" style="display: none;" class="user-welcome"><span id="userName"></span><button class="logout-btn" onclick="logout()">Logout</button><button id="uploadBtn" class="upload-art-btn" style="display: none;" onclick="openUploadModal()">+ Upload Art</button></div>
   </div>
 </nav>
 
-<section id="hero"><div class="hero-left"><div class="hero-breadcrumb">Digital Museum · Est. 2026</div><h1 class="hero-title">The Art<br><span class="line-2">Without Borders</span><br><span class="outline">NIA</span></h1><p class="hero-desc">A museum built with intention. Where artists find purpose, collectors find meaning, and visitors find themselves changed.</p><button class="btn-primary" onclick="openAuthModal('signup')">Begin Your Journey</button></div><div class="hero-right"><div class="hero-main-art"><img style="width:100%;height:100%;object-fit:cover" src="https://plus.unsplash.com/premium_photo-1752521132454-b430d2416f36?w=600&auto=format" alt="hero"><div class="hero-art-info"><div class="hero-art-title">Depths Uncharted, No. 7</div><div class="hero-art-sub">Linda Umwali · Digital Oil</div></div></div></div></section>
+<section id="hero"><div class="hero-left"><div class="hero-breadcrumb">Digital Museum · Est. 2026</div><h1 class="hero-title">The Art<br><span class="line-2">Without Borders</span><br><span class="outline">NIA</span></h1><p class="hero-desc">A museum built with intention. Where artists find purpose, collectors find meaning, and visitors find themselves changed.</p><button class="btn-primary" onclick="openAuthModal('login')">Begin Your Journey</button></div><div class="hero-right"><div class="hero-main-art"><img style="width:100%;height:100%;object-fit:cover" src="https://plus.unsplash.com/premium_photo-1752521132454-b430d2416f36?w=600&auto=format" alt="hero"><div class="hero-art-info"><div class="hero-art-title">Depths Uncharted, No. 7</div><div class="hero-art-sub">Marina Volkov · Digital Oil</div></div></div></div></section>
 
 <div class="marquee-band" style="background:var(--accent); padding:14px 0; overflow:hidden; white-space:nowrap;"><div class="marquee-inner" style="display:inline-block; animation:marqueeScroll 24s linear infinite;"><span style="font-family:'Barlow Condensed';letter-spacing:0.2em;">NIA Digital Museum</span><span class="dot">◆</span><span>Purpose in Every canvas</span><span class="dot">◆</span><span>Art Without Walls</span><span class="dot">◆</span><span>Artworks</span><span class="dot">◆</span><span>African Artists</span><span class="dot">◆</span><span>Kigali · Lagos · Kampala · Dar es Salaam . Nairobi . Addis Ababa</span><span class="dot">◆</span><span>NIA Digital Museum</span><span class="dot">◆</span></div></div>
 
@@ -326,7 +376,7 @@ input[type="radio"]:checked + div { color: var(--accent); }
 
 <section id="marketplace"><div class="reveal"><div class="s-num">02 — Marketplace</div><h2 class="s-title">Collect <em>Art</em></h2><div class="market-wrap"><aside class="m-sidebar"><div class="m-side-title">Filter Works</div><div class="m-group"><div class="m-group-label">Price Range</div><input type="range" id="priceRange" min="0" max="10000" value="10000" step="100"><div class="range-row"><span>$0</span><span id="priceValue">$10,000</span></div></div><div class="m-group"><div class="m-group-label">Medium</div><div id="mediumFilters" class="chk-list"></div></div></aside><div id="marketplaceContainer" class="m-grid"></div></div></div></section>
 
-<!-- ============================================================ EXHIBITIONS -->
+<!-- EXHIBITIONS -->
 <section id="exhibitions">
   <div class="reveal">
     <div class="s-num">03 — Exhibitions</div>
@@ -381,22 +431,24 @@ input[type="radio"]:checked + div { color: var(--accent); }
   </div>
 </section>
 
-<section id="artists"><div class="reveal"><div class="s-num">04 — Artists</div><h2 class="s-title">Meet the <em>Creators</em></h2><div class="artists-grid"><div class="a-card"><div class="a-avatar"></div><div class="a-name">Linda Umwali</div><div class="a-medium">Digital Painting</div><div class="a-bio">Ocean depths as metaphor.</div><button class="btn-follow" onclick="showToast('Following Linda')">+ Follow</button></div><div class="a-card"><div class="a-avatar"></div><div class="a-name">Chris Uwonkunda</div><div class="a-medium">Generative</div><div class="a-bio">Code poetry.</div><button class="btn-follow" onclick="showToast('Following Chris')">+ Follow</button></div><div class="a-card"><div class="a-avatar"></div><div class="a-name">Terra Vision</div><div class="a-medium">Photography</div><div class="a-bio">Landscapes on the edge.</div><button class="btn-follow" onclick="showToast('Following Terra')">+ Follow</button></div><div class="a-card"><div class="a-avatar"></div><div class="a-name">Inganji Art</div><div class="a-medium">3D Sculpture</div><div class="a-bio">Impossible spaces.</div><button class="btn-follow" onclick="showToast('Following Inganji')">+ Follow</button></div></div></div></section>
+<section id="artists"><div class="reveal"><div class="s-num">04 — Artists</div><h2 class="s-title">Meet the <em>Creators</em></h2><div class="artists-grid"><div class="a-card"><div class="a-avatar"></div><div class="a-name">Linda Umwali</div><div class="a-medium">Digital Painting</div><div class="a-bio">Ocean depths as metaphor.</div><button class="btn-follow" onclick="toggleFollow(this)">+ Follow</button></div><div class="a-card"><div class="a-avatar"></div><div class="a-name">Chris Uwonkunda</div><div class="a-medium">Generative</div><div class="a-bio">Code poetry.</div><button class="btn-follow" onclick="toggleFollow(this)">+ Follow</button></div><div class="a-card"><div class="a-avatar"></div><div class="a-name">Terra Vision</div><div class="a-medium">Photography</div><div class="a-bio">Landscapes on the edge.</div><button class="btn-follow" onclick="toggleFollow(this)">+ Follow</button></div><div class="a-card"><div class="a-avatar"></div><div class="a-name">Inganji Art</div><div class="a-medium">3D Sculpture</div><div class="a-bio">Impossible spaces.</div><button class="btn-follow" onclick="toggleFollow(this)">+ Follow</button></div></div></div></section>
 
-<section id="community"><div class="reveal"><div class="s-num">05 — Community</div><h2 class="s-title">The <em>Forum</em></h2><div class="comm-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:32px"><div><div class="comm-card" style="background:var(--surface); border-radius:16px; padding:20px;"><div class="comm-head">💬 Critiques</div><div class="thread" onclick="showToast('Thread preview')"><div class="t-title">How do you handle feedback?</div><div class="t-meta">24 replies</div></div></div></div><div class="events-list"><div class="ev-card" style="background:var(--surface); border-radius:16px; padding:16px; margin-bottom:8px;" onclick="showToast('RSVP')"><div class="ev-date"><div class="ev-day">18</div><div class="ev-mon">Feb</div></div><div><div class="ev-title">Artist Studio Tour</div><div class="ev-desc">Live walkthrough</div></div></div></div></div></div></section>
+<section id="community"><div class="reveal"><div class="s-num">05 — Community</div><h2 class="s-title">The <em>Forum</em></h2><div class="comm-grid"><div><div class="comm-card"><div class="comm-head">💬 Critiques</div><div class="thread" onclick="showToast('Thread preview')"><div class="t-title">How do you handle feedback?</div><div class="t-meta">24 replies</div></div><div class="thread" onclick="showToast('Thread preview')"><div class="t-title">Generative vs handcrafted — does the process matter to the value?</div><div class="t-meta">61 replies</div></div><div class="thread" onclick="showToast('Thread preview')"><div class="t-title">Color theory workshop: share your palettes and process</div><div class="t-meta">38 replies</div></div><div class="forum-message-panel"><textarea id="newMessageText" placeholder="Share a message with the community..."></textarea><button class="btn-add-message" onclick="postForumMessage()">Post</button></div><div id="forumMessagesList" class="forum-messages"></div></div></div></div></div></section>
 
-<section id="about"><div class="reveal"><div class="s-num">06 — About NIA</div><h2 class="s-title">Our <em>Manifesto</em></h2><p class="manifesto" style="font-family:'Cormorant Garamond', serif; font-size:20px;"><strong>NIA means purpose.</strong> Artist-first royalties (90% primary, 10% secondary). Global reach, verified authenticity, free education.</p></div></section>
+<section id="about"><div class="reveal"><div class="s-num">06 — About NIA</div><h2 class="s-title">Our <em>Manifesto</em></h2><p class="manifesto" style="font-family:'Cormorant Garamond', serif; font-size:20px;"><strong>NIA means purpose.</strong> We built this museum with a single one: to give every artist a world-class stage — and every curious human a portal to discovery.<br><br>The museum of the future is <strong>alive, participatory, and infinite.</strong> It is not a building; it is a relationship between makers and witnesses, between creators and collectors, between the present moment and all that endures.</p></div></section>
+
+<section id="roles"><div class="reveal"><div class="s-num">07 — Join as a Member</div><h2 class="s-title" style="font-size:36px">Choose Your <em>Path</em></h2><div class="roles-row"><div class="role-box"><div class="role-ico"></div><div class="role-nm">Artist</div><div class="role-perks">Upload unlimited works<br>Set your own prices<br>Keep 90% of sales<br>Access curator network<br>Run your own exhibitions</div><button class="btn-role" onclick="openAuthModal('login')">Join as Artist</button></div><div class="role-box"><div class="role-ico"></div><div class="role-nm">Collector</div><div class="role-perks">Build your collection<br>Early access to drops<br>Certificate of authenticity<br>Direct artist messaging<br>Physical print delivery</div><button class="btn-role" onclick="openAuthModal('login')">Join as Collector</button></div><div class="role-box"><div class="role-ico"></div><div class="role-nm">Visitor</div><div class="role-perks">Free gallery access<br>Save to wishlists<br>Follow artists<br>Join community forums<br>Attend free events</div><button class="btn-role" onclick="openAuthModal('login')">Join Free</button></div></div></div></section>
 
 <footer><div class="footer-top"><div><div class="f-logo">NIA</div><div class="f-tagline">The museum without walls.<br>Art without borders.<br>Purpose in every pixel.</div></div><div><div class="f-col-h">Explore</div><ul class="f-links"><li><a href="#gallery">Gallery</a></li><li><a href="#marketplace">Marketplace</a></li><li><a href="#exhibitions">Exhibitions</a></li><li><a href="#artists">Artists</a></li></ul></div><div><div class="f-col-h">Community</div><ul class="f-links"><li><a href="#community">Forums</a></li><li><a href="#community">Events</a></li></ul></div><div><div class="f-col-h">Support</div><ul class="f-links"><li><a href="#">Help Center</a></li><li><a href="#">Contact</a></li></ul></div></div><div class="footer-bottom"><div class="f-copy">© 2026 NIA Digital Museum · Kigali · All rights reserved</div><div class="f-socials"><a class="s-btn" href="#" onclick="showToast('Instagram');return false">📸</a><a class="s-btn" href="#" onclick="showToast('Twitter');return false">🐦</a><a class="s-btn" href="#" onclick="showToast('Discord');return false">💬</a></div></div></footer>
 
 <!-- AUTH MODAL with card-style inputs -->
-<div class="modal-wrap" id="authModal"><div class="modal-box"><button class="modal-x" onclick="closeAuthModal()">✕</button><div id="modalTitle" class="modal-title">Join NIA</div><div id="roleSelect" style="display:flex;gap:8px;margin-bottom:20px"><div class="rp-opt sel" data-role="artist">🎨 Artist</div><div class="rp-opt" data-role="collector">💎 Collector</div><div class="rp-opt" data-role="visitor">👁️ Visitor</div></div><div class="card-input-group"><label>Full Name</label><input id="authName" type="text" placeholder="Your name"></div><div class="card-input-group"><label>Email</label><input id="authEmail" type="email" placeholder="you@example.com"></div><div class="card-input-group"><label>Password</label><input id="authPassword" type="password" placeholder="password"></div><div id="momoField" class="card-input-group" style="display:none"><label>MOMO Number</label><input id="authMomoNumber" type="text" placeholder="e.g., +256701234567"></div><button id="authActionBtn" class="modal-cta" onclick="handleAuth()">Create Account</button><div style="text-align:center;margin-top:12px"><span id="toggleAuthText" style="cursor:pointer;color:var(--accent-2)" onclick="switchAuthMode()">Already have an account? Sign in</span></div></div></div>
+<div class="modal-wrap" id="authModal"><div class="modal-box"><button class="modal-x" onclick="closeAuthModal()">✕</button><div id="modalTitle" class="modal-title">Join NIA</div><div id="roleSelect" style="display:flex;gap:8px;margin-bottom:20px"><div class="rp-opt sel" data-role="artist"> Artist</div><div class="rp-opt" data-role="collector">Collector</div><div class="rp-opt" data-role="visitor">Visitor</div></div><div class="card-input-group"><label>Full Name</label><input id="authName" type="text" placeholder="Your name"></div><div class="card-input-group"><label>Email</label><input id="authEmail" type="email" placeholder="you@example.com"></div><div class="card-input-group"><label>Password</label><input id="authPassword" type="password" placeholder="password"></div><div id="momoField" class="card-input-group" style="display:none"><label>MOMO Number</label><input id="authMomoNumber" type="text" placeholder="e.g., +256701234567"></div><button id="authActionBtn" class="modal-cta" onclick="handleAuth()">Create Account</button><div style="text-align:center;margin-top:12px"><span id="toggleAuthText" style="cursor:pointer;color:var(--accent-2)" onclick="switchAuthMode()">Already have an account? Sign in</span></div></div></div>
 
 <!-- UPLOAD MODAL with card inputs -->
 <div class="modal-wrap" id="uploadModal"><div class="modal-box"><button class="modal-x" onclick="closeUploadModal()">✕</button><div class="modal-title">Upload Artwork</div><div class="card-input-group"><label>Title</label><input id="artTitle" placeholder="Artwork title"></div><div class="card-input-group"><label>Medium</label><input id="artMedium" placeholder="e.g., Digital Painting"></div><div class="card-input-group"><label>Price (USD)</label><input id="artPrice" type="number" placeholder="1200"></div><div class="card-input-group"><label>Image File</label><input type="file" id="artImageFile" accept="image/*" style="padding:8px 0;"></div><button class="modal-cta" onclick="uploadArtwork()">Publish Artwork →</button></div></div>
 
 <!-- PAYMENT MODAL -->
-<div class="modal-wrap" id="paymentModal"><div class="modal-box"><button class="modal-x" onclick="closePaymentModal()">✕</button><div class="modal-title">Complete Purchase</div><div id="paymentArtDetails" class="payment-details"></div><div class="payment-methods"><label class="payment-method active"><input type="radio" name="paymentMethod" value="card" checked onchange="togglePaymentMethod('card')"><div>💳 Card</div></label><label class="payment-method"><input type="radio" name="paymentMethod" value="momo" onchange="togglePaymentMethod('momo')"><div>📱 MOMO</div></label></div><div id="cardPayment"><div class="card-input-group"><label>Card Number</label><input id="cardNumber" placeholder="4242 4242 4242 4242"></div><div class="card-input-group"><label>Expiry (MM/YY)</label><input id="cardExpiry" placeholder="12/28"></div><div class="card-input-group"><label>CVC</label><input id="cardCvc" placeholder="123"></div></div><div id="momoPayment" style="display:none"><div class="momo-display"><div>Send payment to artist's MOMO:</div><div class="momo-number" id="artistMomoNumber">+256701234567</div><div style="font-size:11px;margin-top:8px;color:var(--text-3)">Confirm name matches before sending</div></div></div><button class="modal-cta" onclick="processPayment()">Confirm Payment</button></div></div>
+<div class="modal-wrap" id="paymentModal"><div class="modal-box"><button class="modal-x" onclick="closePaymentModal()">✕</button><div class="modal-title">Complete Purchase</div><div id="paymentArtDetails" class="payment-details"></div><div class="payment-methods"><label class="payment-method active"><input type="radio" name="paymentMethod" value="card" checked onchange="togglePaymentMethod('card')"><div>Card</div></label><label class="payment-method"><input type="radio" name="paymentMethod" value="momo" onchange="togglePaymentMethod('momo')"><div>📱 MOMO</div></label></div><div id="cardPayment"><div class="card-input-group"><label>Card Number</label><input id="cardNumber" placeholder="4242 4242 4242 4242"></div><div class="card-input-group"><label>Expiry (MM/YY)</label><input id="cardExpiry" placeholder="12/28"></div><div class="card-input-group"><label>CVC</label><input id="cardCvc" placeholder="123"></div></div><div id="momoPayment" style="display:none"><div class="momo-display"><div>Send payment to artist's MOMO:</div><div class="momo-number" id="artistMomoNumber">+256701234567</div><div style="font-size:11px;margin-top:8px;color:var(--text-3)">Confirm name matches before sending</div></div></div><button class="modal-cta" onclick="processPayment()">Confirm Payment</button></div></div>
 
 <div class="toast" id="toast"><span>◆</span><span id="toast-msg"></span></div>
 
@@ -411,8 +463,7 @@ let selectedArtForPayment = null;
 const defaultArtworks = [
   { id: 'a1', title: 'Depths Uncharted', artist: 'Linda Umwali', artistId: 'marina', price: 2400, medium: 'Digital Painting', imageUrl: 'https://plus.unsplash.com/premium_photo-1752521132454-b430d2416f36?w=400&auto=format', dateAdded: Date.now() },
   { id: 'a2', title: 'Void Frequency', artist: 'Chris Uwonkunda', artistId: 'cosmos', price: 1800, medium: 'Generative', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAVi5X05DC0PGxEYKzvTVCQPx2iiHXgvdELQ&s', dateAdded: Date.now() },
-  { id: 'a3', title: 'Verdant Signal', artist: 'Terra Vision', artistId: 'terra', price: 980, medium: 'Photography', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp8KbgA6_eQD-A3lDJ-Jk4B-PtYXWJivEjkw&s', dateAdded: Date.now() },
-  { id: 'a4', title: 'Event Horizon', artist: 'Inganji Art', artistId: 'solstice', price: 5600, medium: '3D Sculpture', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxvMNme2KRWtZM2oAeIBWIa2OYisGIGszljg&s', dateAdded: Date.now() }
+  { id: 'a3', title: 'Verdant Signal', artist: 'Terra Vision', artistId: 'terra', price: 980, medium: 'Photography', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp8KbgA6_eQD-A3lDJ-Jk4B-PtYXWJivEjkw&s', dateAdded: Date.now() }
 ];
 
 function loadData() {
@@ -468,7 +519,7 @@ function applyMarketFilters() {
   const container = document.getElementById('marketplaceContainer');
   container.innerHTML = filtered.map(art => {
     const isOwner = currentUser && currentUser.id === art.artistId;
-    const deleteBtn = isOwner ? `<button class="btn-delete" onclick="deleteArtwork('${art.id}')">🗑️ Delete</button>` : '';
+    const deleteBtn = isOwner ? `<button class="btn-delete" onclick="deleteArtwork('${art.id}')">Delete</button>` : '';
     return `<div class="m-item"><div class="m-art"><img src="${art.imageUrl}" alt="${art.title}"></div><div class="m-info"><div class="m-name">${art.title}</div><div class="m-by">${art.artist}</div><div class="m-foot"><span class="m-price">$${art.price.toLocaleString()}</span><button class="btn-buy" onclick="event.stopPropagation(); initiatePayment('${art.id}')">Buy</button>${deleteBtn}</div></div></div>`;
   }).join('');
 }
@@ -612,6 +663,36 @@ function showToast(msg) {
   toast.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+function toggleFollow(btn) {
+  const on = btn.classList.toggle('on');
+  btn.textContent = on ? '✓ Following' : '+ Follow';
+  showToast(on ? 'Following ◆' : 'Unfollowed');
+}
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.innerText = str;
+  return div.innerHTML;
+}
+function postForumMessage() {
+  const input = document.getElementById('newMessageText');
+  const message = input.value.trim();
+  if (!message) {
+    showToast('Please enter a message before posting');
+    return;
+  }
+  const isLoggedIn = window.currentUser && window.currentUser.name;
+  const author = isLoggedIn ? window.currentUser.name : 'Guest';
+  const newMessage = document.createElement('div');
+  newMessage.className = 'forum-message';
+  newMessage.innerHTML = `
+    <div class="msg-author">${escapeHtml(author)}</div>
+    <div class="msg-body">${escapeHtml(message)}</div>
+    <div class="msg-ts">${new Date().toLocaleString()}</div>
+  `;
+  document.getElementById('forumMessagesList').prepend(newMessage);
+  input.value = '';
+  showToast('Message posted');
 }
 document.querySelectorAll('.rp-opt').forEach(opt => { opt.onclick = () => { document.querySelectorAll('.rp-opt').forEach(o=>o.classList.remove('sel')); opt.classList.add('sel'); const momoField = document.getElementById('momoField'); if(opt.dataset.role === 'artist') momoField.style.display = 'block'; else momoField.style.display = 'none'; }; });
 function togglePaymentMethod(method) {

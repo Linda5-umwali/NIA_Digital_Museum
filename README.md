@@ -17,6 +17,8 @@ The system structure and interactions are modeled using UML diagrams to ensure c
 - System flow
 - Component relationships
 
+### Try dark theme ...
+
 ## System Architecture
 
 ### Project Structure

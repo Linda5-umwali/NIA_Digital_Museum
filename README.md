@@ -79,6 +79,7 @@ node server.js
 6. Open frontend
 Open index.html in browser
 ```
+The application is deployed with the frontend hosted on GitHub Pages and the backend running on Render, connected to a MongoDB Atlas database.
 
 ## Inspiration
 The project is inspired by the need to create more opportunities for artists in Africa and provide them with platforms to monetize their passion. That's why the platform is named NIA meaning Purpose.

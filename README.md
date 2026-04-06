@@ -83,5 +83,8 @@ Open index.html in browser
 ## Inspiration
 The project is inspired by the need to create more opportunities for artists in Africa and provide them with platforms to monetize their passion. That's why the platform is named NIA meaning Purpose.
 
+## Demo video
+[Click here to watch the demo](https://drive.google.com/file/d/13d9Df16ZeL7WSjoYs0scz9X8s2PcaWAr/view?usp=sharing)
+
 ## Author
 **Linda Umwali**
